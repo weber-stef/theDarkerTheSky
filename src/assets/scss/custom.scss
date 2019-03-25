@@ -97,3 +97,17 @@ span {
 .navbar {
   z-index: 1;
 }
+
+.navbar-brand {
+  word-wrap: wrap;
+}
+
+input {
+  border-radius: 5px;
+  padding: 5px;
+  margin-right: 20px;
+}
+
+#search {
+  align-self: flex-end;
+}
