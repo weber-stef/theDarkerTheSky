@@ -129,63 +129,34 @@ function () {
     this.long = long; // this.addMyEventListeners();
 
     this.render();
-  } // addMyEventListeners() {
-  //   // define querySel
-  //   // console.log("Adding Events");
-  //   const searchButton = document.querySelector("#searchButton");
-  //   const searchField = document.querySelector("#searchField");
-  //   // console.log(searchButton);
-  //   // console.log(earchField);
-  //   searchButton.addEventListener("click", e => {
-  //     console.log("click");
-  //     this.user = searchField.value;
-  //     this.render();
-  //   });
-  // }
-  // doneAt(time) {
-  //   let momentDate = moment(time);
-  //   let message = "";
-  //   // "2018-10-17T09:02:48Z"
-  //   return momentDate.format('DD.MM.YYYY');
-  // }
-
+  }
 
   _createClass(WeatherForecast, [{
-    key: "render",
-    value: function render() {
-      var _this = this;
+    key: "fToC",
+    value: function fToC(fahrenheit) {
+      var fTemp = fahrenheit;
+      var fToCel = (fTemp - 32) * 5 / 9;
+      return Math.floor(fToCel);
+    } // addMyEventListeners() {
+    //   // define querySel
+    //   // console.log("Adding Events");
+    //   const searchButton = document.querySelector("#searchButton");
+    //   const searchField = document.querySelector("#searchField");
+    //   // console.log(searchButton);
+    //   // console.log(earchField);
+    //   searchButton.addEventListener("click", e => {
+    //     console.log("click");
+    //     this.user = searchField.value;
+    //     this.render();
+    //   });
+    // }
+    // doneAt(time) {
+    //   let momentDate = moment(time);
+    //   let message = "";
+    //   // "2018-10-17T09:02:48Z"
+    //   return momentDate.format('DD.MM.YYYY');
+    // }
 
-      // console.log("render");
-      // define search parameters
-      // weather api
-      var corsAnywhereProxy = "https://cors-anywhere.herokuapp.com/";
-      var firstPartOfUrl = "https://api.darksky.net/forecast/";
-      var myDarkSkyApiKey = "8e7c3b8124cb62d06ecaf994b8e8ea9f/"; // const myCoordinates = `52.520008,13.404954` // berlin
-
-      var url2Fetch = "".concat(corsAnywhereProxy).concat(firstPartOfUrl).concat(myDarkSkyApiKey).concat(this.lat, ",").concat(this.long);
-      console.log(url2Fetch);
-      var currentTemperature = "";
-      var weAreIn = "";
-      var temperatureHere = 0;
-      var weatherReport = document.querySelector(".weatherReport");
-      var polaroidImage = document.querySelector(".polaroidImage");
-      var myBrand = document.querySelector(".navbar-brand");
-      myBrand.innerHTML = "Breaking News : Weather ahead!";
-      fetch(url2Fetch).then(function (response) {
-        return response.json();
-      }).then(function (data) {
-        console.log(data);
-        temperatureHere = _this.fToC(data.currently.temperature);
-        console.log(temperatureHere);
-        weAreIn = data.timezone.split('/')[1];
-        console.log(weAreIn);
-        console.log(_this.gob(temperatureHere)[0]);
-        console.log(weAreIn);
-        polaroidImage.style.backgroundImage = "url(\"https://source.unsplash.com/random?".concat(weAreIn, "\")");
-        console.log(polaroidImage.style.backgroundImage);
-        weatherReport.innerHTML = "Hi there people, here in ".concat(weAreIn, " the weather is  ").concat(_this.gob(temperatureHere)[0], ", it's ").concat(_this.gob(temperatureHere)[1], " ").concat(temperatureHere, "\xB0 Celsius and I am ").concat(_this.gob(temperatureHere)[2], "..");
-      });
-    }
   }, {
     key: "gob",
     value: function gob(temperatureHere) {
@@ -197,7 +168,7 @@ function () {
         feelGoodMode = "kinda shitty..";
         shockOrNoShock = "shocking";
         hotOrCold = "freezing like crazy!!";
-      } else if (temperatureHere > 8 && temperatureHere < 20) {
+      } else if (temperatureHere > 8 && temperatureHere < 25) {
         feelGoodMode = "kinda ok";
         shockOrNoShock = "";
         hotOrCold = "feeling quite comfortable";
@@ -210,18 +181,44 @@ function () {
       return [feelGoodMode, shockOrNoShock, hotOrCold];
     }
   }, {
-    key: "fToC",
-    value: function fToC(fahrenheit) {
-      var fTemp = fahrenheit;
-      var fToCel = (fTemp - 32) * 5 / 9;
-      return Math.floor(fToCel);
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      // weather api
+      var corsAnywhereProxy = "https://cors-anywhere.herokuapp.com/";
+      var firstPartOfUrl = "https://api.darksky.net/forecast/";
+      var myDarkSkyApiKey = "8e7c3b8124cb62d06ecaf994b8e8ea9f/"; // const myCoordinates = `52.520008,13.404954` // berlin
+
+      var url2Fetch = "".concat(corsAnywhereProxy).concat(firstPartOfUrl).concat(myDarkSkyApiKey).concat(this.lat, ",").concat(this.long); // console.log(url2Fetch);
+
+      var currentTemperature = "";
+      var weAreIn = "";
+      var temperatureHere = 0;
+      var weatherReport = document.querySelector(".weatherReport");
+      var polaroidImage = document.querySelector(".polaroidImage");
+      var myBrand = document.querySelector(".navbar-brand");
+      myBrand.innerHTML = "Breaking News : Weather ahead!";
+      fetch(url2Fetch).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        console.log(data);
+        temperatureHere = _this.fToC(data.currently.temperature);
+        console.log("".concat(temperatureHere, " is the current temperature"));
+        console.log(_this.gob(temperatureHere)); // console.log(temperatureHere);
+
+        weAreIn = data.timezone.split('/')[1]; // console.log(weAreIn);
+
+        polaroidImage.style.backgroundImage = "url(\"https://source.unsplash.com/random?".concat(weAreIn, "\")");
+        weatherReport.innerHTML = "Hi there people, here in ".concat(weAreIn, " the weather is  ").concat(_this.gob(temperatureHere)[0], ", it's ").concat(_this.gob(temperatureHere)[1], " ").concat(temperatureHere, "\xB0 Celsius and I am ").concat(_this.gob(temperatureHere)[2], "..");
+      });
     }
   }]);
 
   return WeatherForecast;
 }();
 
-new WeatherForecast("-12.5", "18.5");
+new WeatherForecast("-49.25", "69.167");
 
 /***/ }),
 

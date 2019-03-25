@@ -8,7 +8,11 @@ class WeatherForecast {
     // this.addMyEventListeners();
     this.render();
   }
-
+  fToC(fahrenheit) {
+    var fTemp = fahrenheit;
+    var fToCel = (fTemp - 32) * 5 / 9;
+    return Math.floor(fToCel);
+  }
   // addMyEventListeners() {
   //   // define querySel
   //   // console.log("Adding Events");
@@ -32,16 +36,35 @@ class WeatherForecast {
   //   return momentDate.format('DD.MM.YYYY');
   // }
 
+  gob(temperatureHere) {
+    let feelGoodMode = "";
+    let shockOrNoShock = "";
+    let hotOrCold = "";
+
+    if (temperatureHere < 8) {
+      feelGoodMode = "kinda shitty..";
+      shockOrNoShock = "shocking";
+      hotOrCold = "freezing like crazy!!"
+    } else if (temperatureHere > 8 && temperatureHere < 25) {
+      feelGoodMode = "kinda ok";
+      shockOrNoShock = "";
+      hotOrCold = "feeling quite comfortable";
+    } else if (temperatureHere > 25 && temperatureHere < 60) {
+      feelGoodMode = "kinda too hot";
+      shockOrNoShock = "";
+      hotOrCold = "sweating like a crazy person";
+    }
+    return [feelGoodMode, shockOrNoShock, hotOrCold];
+  }
+
   render() {
-    // console.log("render");
-    // define search parameters
     // weather api
     const corsAnywhereProxy = `https://cors-anywhere.herokuapp.com/`
     const firstPartOfUrl = `https://api.darksky.net/forecast/`;
     const myDarkSkyApiKey = `8e7c3b8124cb62d06ecaf994b8e8ea9f/`;
     // const myCoordinates = `52.520008,13.404954` // berlin
     let url2Fetch = `${corsAnywhereProxy}${firstPartOfUrl}${myDarkSkyApiKey}${this.lat},${this.long}`
-    console.log(url2Fetch);
+    // console.log(url2Fetch);
     let currentTemperature = "";
     let weAreIn = "";
     let temperatureHere = 0;
@@ -54,46 +77,24 @@ class WeatherForecast {
       .then(data => {
         console.log(data);
         temperatureHere = this.fToC(data.currently.temperature);
-        console.log(temperatureHere);
+        console.log(`${temperatureHere} is the current temperature`);
+        console.log(this.gob(temperatureHere));
+        // console.log(temperatureHere);
         weAreIn = (data.timezone.split('/')[1]);
-        console.log(weAreIn);
-        console.log(this.gob(temperatureHere)[0]);
-        console.log(weAreIn);
+        // console.log(weAreIn);
+
         polaroidImage.style.backgroundImage = `url("https://source.unsplash.com/random?${weAreIn}")`;
-        console.log(polaroidImage.style.backgroundImage);
 
         weatherReport.innerHTML = `Hi there people, here in ${weAreIn} the weather is  ${this.gob(temperatureHere)[0]}, it's ${this.gob(temperatureHere)[1]} ${temperatureHere}° Celsius and I am ${this.gob(temperatureHere)[2]}..`
       });
   }
 
-  gob(temperatureHere) {
-    let feelGoodMode = "";
-    let shockOrNoShock = "";
-    let hotOrCold = "";
-    if (temperatureHere < 8) {
-      feelGoodMode = "kinda shitty..";
-      shockOrNoShock = "shocking";
-      hotOrCold = "freezing like crazy!!"
-    } else if (temperatureHere > 8 && temperatureHere < 20) {
-      feelGoodMode = "kinda ok";
-      shockOrNoShock = "";
-      hotOrCold = "feeling quite comfortable";
-    } else if (temperatureHere > 25 && temperatureHere < 60) {
-      feelGoodMode = "kinda too hot";
-      shockOrNoShock = "";
-      hotOrCold = "sweating like a crazy person";
-    }
-    return [feelGoodMode, shockOrNoShock, hotOrCold];
-  }
 
-  fToC(fahrenheit) {
-    var fTemp = fahrenheit;
-    var fToCel = (fTemp - 32) * 5 / 9;
-    return Math.floor(fToCel);
-  }
+
+
 
 
 }
 
 
-new WeatherForecast("-12.5", "18.5");
+new WeatherForecast("-49.25", "69.167");
