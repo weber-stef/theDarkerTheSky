@@ -181,6 +181,14 @@ function () {
       return [feelGoodMode, shockOrNoShock, hotOrCold];
     }
   }, {
+    key: "getKeyByValue",
+    value: function getKeyByValue(object, value) {
+      console.log("das hier checkt gk " + (object, value));
+      return Object.keys(object).find(function (key) {
+        return object[key] === value;
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this = this;
@@ -199,12 +207,15 @@ function () {
       var polaroidImage = document.querySelector(".polaroidImage");
       var myBrand = document.querySelector(".navbar-brand");
       var forecasts = document.querySelector("#forecasts");
+      var f1 = [];
       myBrand.innerHTML = "Breaking News : Weather ahead!";
       fetch(url2Fetch).then(function (response) {
         return response.json();
       }).then(function (data) {
         console.log(data);
         temperatureHere = _this.fToC(data.currently.temperature);
+        f1 = data.daily.data[1].cloudCover;
+        console.log(f1);
         console.log("".concat(temperatureHere, " is the current temperature"));
         console.log(_this.gob(temperatureHere)); // console.log(temperatureHere);
 
@@ -213,9 +224,13 @@ function () {
         polaroidImage.style.backgroundImage = "url(\"https://source.unsplash.com/random?".concat(weAreIn, "\")");
         weatherReport.innerHTML = "Hi there people, here in ".concat(weAreIn, " the weather is  ").concat(_this.gob(temperatureHere)[0], ", it's ").concat(_this.gob(temperatureHere)[1], " ").concat(temperatureHere, "\xB0 Celsius and I am ").concat(_this.gob(temperatureHere)[2], "..");
 
-        for (var i = 1; i < 4; i++) {
+        for (var i = 0; i < 3; i++) {
           forecasts.innerHTML += "<div class=\"forecast-".concat(i, "\"></div>");
-          document.querySelector(".forecast-".concat(i)).innerHTML += "jaja";
+          document.querySelector(".forecast-".concat(i)).innerHTML += Object.keys(data.daily.data[i])[26] + ": " + data.daily.data[i].cloudCover;
+          console.log(data.daily.data[i]);
+          console.log(_this.getKeyByValue(data.daily.data[i], "cloudCover")); // console.log(Object.keys(data.daily.data[i])[26]);
+          // console.log(`Dies ist die Liste von Array Nr. ${i}`);
+          // Object.keys(data.daily.data[i]).forEach((key, index) => console.log(index, key));
         }
       });
     }
@@ -224,7 +239,7 @@ function () {
   return WeatherForecast;
 }();
 
-new WeatherForecast("41.88", "14.88");
+new WeatherForecast("47.5", "19.05");
 
 /***/ }),
 
