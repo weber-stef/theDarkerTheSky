@@ -198,6 +198,7 @@ function () {
       var weatherReport = document.querySelector(".weatherReport");
       var polaroidImage = document.querySelector(".polaroidImage");
       var myBrand = document.querySelector(".navbar-brand");
+      var forecasts = document.querySelector("#forecasts");
       myBrand.innerHTML = "Breaking News : Weather ahead!";
       fetch(url2Fetch).then(function (response) {
         return response.json();
@@ -211,6 +212,11 @@ function () {
 
         polaroidImage.style.backgroundImage = "url(\"https://source.unsplash.com/random?".concat(weAreIn, "\")");
         weatherReport.innerHTML = "Hi there people, here in ".concat(weAreIn, " the weather is  ").concat(_this.gob(temperatureHere)[0], ", it's ").concat(_this.gob(temperatureHere)[1], " ").concat(temperatureHere, "\xB0 Celsius and I am ").concat(_this.gob(temperatureHere)[2], "..");
+
+        for (var i = 1; i < 4; i++) {
+          forecasts.innerHTML += "<div class=\"forecast-".concat(i, "\"></div>");
+          document.querySelector(".forecast-".concat(i)).innerHTML += "jaja";
+        }
       });
     }
   }]);
@@ -218,7 +224,7 @@ function () {
   return WeatherForecast;
 }();
 
-new WeatherForecast("-49.25", "69.167");
+new WeatherForecast("41.88", "14.88");
 
 /***/ }),
 

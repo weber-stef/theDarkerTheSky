@@ -43,8 +43,10 @@ span {
   margin: 0 auto; }
 
 .masthead {
+  position: relative;
   height: 100vh;
   min-height: 500px;
+  witdh: 80%;
   background-image: url(../img/chuttersnap-758542-unsplash.jpg);
   background-size: 100% auto;
   background-attachment: fixed;
@@ -52,7 +54,7 @@ span {
 
 .polaroid {
   position: absolute;
-  bottom: 1vw;
+  bottom: 10vh;
   right: 10px;
   z-index: 10;
   width: 16vw;
@@ -76,7 +78,9 @@ span {
   z-index: 1; }
 
 .navbar-brand {
-  word-wrap: wrap; }
+  word-wrap: wrap;
+  align-self: flex-start;
+  flex-basis: 80%; }
 
 input {
   border-radius: 5px;
@@ -84,7 +88,40 @@ input {
   margin-right: 20px; }
 
 #search {
-  align-self: flex-end; }
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+#searchButton {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  margin-left: 20px;
+  border: 4px double black;
+  background-image: url(../img/chuttersnap-758542-unsplash.jpg); }
+
+nav > div {
+  display: flex;
+  justify-content: space-between; }
+
+#forecasts {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 5vw; }
+
+[class|="forecast"] {
+  position: relative;
+  background-color: #fff;
+  width: 28vw;
+  height: 30vw;
+  border-radius: 3vw;
+  padding: 10px; }
+
+.container-2 {
+  margin-top: 5vw; }
 
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)

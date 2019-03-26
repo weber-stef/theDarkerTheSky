@@ -71,6 +71,7 @@ class WeatherForecast {
     const weatherReport = document.querySelector(".weatherReport");
     const polaroidImage = document.querySelector(".polaroidImage");
     const myBrand = document.querySelector(".navbar-brand");
+    const forecasts = document.querySelector("#forecasts");
     myBrand.innerHTML = "Breaking News : Weather ahead!"
     fetch(url2Fetch)
       .then(response => response.json())
@@ -86,6 +87,10 @@ class WeatherForecast {
         polaroidImage.style.backgroundImage = `url("https://source.unsplash.com/random?${weAreIn}")`;
 
         weatherReport.innerHTML = `Hi there people, here in ${weAreIn} the weather is  ${this.gob(temperatureHere)[0]}, it's ${this.gob(temperatureHere)[1]} ${temperatureHere}° Celsius and I am ${this.gob(temperatureHere)[2]}..`
+        for (let i = 1; i < 4; i++) {
+          forecasts.innerHTML += `<div class="forecast-${i}"></div>`;
+          document.querySelector(`.forecast-${i}`).innerHTML += "jaja";
+        }
       });
   }
 
@@ -97,4 +102,4 @@ class WeatherForecast {
 }
 
 
-new WeatherForecast("-49.25", "69.167");
+new WeatherForecast("41.88", "14.88");
